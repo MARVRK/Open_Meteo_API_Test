@@ -12,7 +12,7 @@ class WeatherDataFetch:
         if not self.cities:
             raise ValueError ("no cities provided")
 
-        # fetching data from old URl + changing dates range on yesterday if no start or end date provided
+        # fetching data from old URl + changing dates range on yesterday if no start date provided
         if not start_date:
             start_date = date.today () - timedelta (days=1)
             end_date = start_date
@@ -37,20 +37,19 @@ class WeatherDataFetch:
 
         storage = {}
 
-        for i, response in enumerate(response):
+        for i, res in enumerate(response):
             city_name = self.cities[i]["name"]
-            hourly = response.Hourly()
+            hourly = res.Hourly()
 
             temp_data = hourly.Variables (0).ValuesAsNumpy()
             wind_data = hourly.Variables (1).ValuesAsNumpy()
             humidity_data = hourly.Variables (2).ValuesAsNumpy()
             cloud_data = hourly.Variables (3).ValuesAsNumpy()
-
-            storage[city_name] = {"temperature_avg": temp_data,
-                                  "wind_speed_avg":  wind_data,
-                                  "humidity_avg":    humidity_data,
-                                  "cloud_cover_avg": cloud_data}
-
+            # by using method "mean" we can calculate average date with floating number
+            storage[city_name] = {"temperature_avg": float(mean(temp_data)),
+                                  "wind_speed_avg":  float(mean(wind_data)),
+                                  "humidity_avg":    float(mean(humidity_data)),
+                                  "cloud_cover_avg": float(mean(cloud_data))}
         return storage
 
 

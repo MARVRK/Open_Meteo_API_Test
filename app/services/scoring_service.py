@@ -20,8 +20,10 @@ class ScoringService:
         humidity_score = self._humidity_score (metrics["humidity_avg"])
         cloud_score = self._cloud_score (metrics["cloud_cover_avg"])
 
-        total = (temp_score * self.WEIGHTS["temperature"] + wind_score * self.WEIGHTS["wind_speed"] + humidity_score * self.WEIGHTS[
-            "humidity"] + cloud_score * self.WEIGHTS["cloud_cover"])
+        total = (temp_score * self.WEIGHTS["temperature"] +
+                 wind_score * self.WEIGHTS["wind_speed"] +
+                 humidity_score * self.WEIGHTS["humidity"] +
+                 cloud_score * self.WEIGHTS["cloud_cover"])
         return total
 
     def _temp_score (self, temp: float) -> float:
