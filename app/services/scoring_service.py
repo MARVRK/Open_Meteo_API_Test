@@ -24,7 +24,7 @@ class ScoringService:
                  wind_score * self.WEIGHTS["wind_speed"] +
                  humidity_score * self.WEIGHTS["humidity"] +
                  cloud_score * self.WEIGHTS["cloud_cover"])
-        return total
+        return round(total,2)
 
     def _temp_score (self, temp: float) -> float:
         deviation = abs (temp - 24)

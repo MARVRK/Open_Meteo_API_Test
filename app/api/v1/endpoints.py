@@ -4,16 +4,13 @@ from app.core.config import CITIES
 from app.services.weather_service import WeatherDataFetch
 from app.services.open_meteo_client import Session, future_data_api
 from app.services.scoring_service import ScoringService
-from app.schemas.schemas import GetWeather
-
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 router = APIRouter()
 
-@router.post('/cities-scores')
-async def get_citiies_scores(params: GetWeather=None):
-    start_date = params.start_date
-    end_date = params.end_date
+@router.get('/cities-scores')
+async def get_citiies_scores(start_date: date = Query(default=None),
+                             end_date: date = Query(default=None)):
 
     get_data = WeatherDataFetch (cities=CITIES, session=Session, url=future_data_api)
     scores = ScoringService ().calculate_scores (weather_data=get_data.fetch_data (start_date=start_date,

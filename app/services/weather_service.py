@@ -46,10 +46,10 @@ class WeatherDataFetch:
             humidity_data = hourly.Variables (2).ValuesAsNumpy()
             cloud_data = hourly.Variables (3).ValuesAsNumpy()
             # by using method "mean" we can calculate average date with floating number
-            storage[city_name] = {"temperature_avg": float(mean(temp_data)),
-                                  "wind_speed_avg":  float(mean(wind_data)),
-                                  "humidity_avg":    float(mean(humidity_data)),
-                                  "cloud_cover_avg": float(mean(cloud_data))}
+            storage[city_name] = {"temperature_avg": round(float(mean(temp_data)),2),
+                                  "wind_speed_avg":  round(float(mean(wind_data)),2),
+                                  "humidity_avg":    round(float(mean(humidity_data)),2),
+                                  "cloud_cover_avg": round(float(mean(cloud_data)),2)}
         return storage
 
 
